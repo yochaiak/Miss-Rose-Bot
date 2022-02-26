@@ -1,7 +1,7 @@
 # Note: chat_id's are stored as strings because the int is too large to be stored in a PSQL database.
 import threading
 
-from sqlalchemy import Column, String, Boolean, UnicodeText, Integer, func, distinct
+from sqlalchemy import Column, String, Boolean, UnicodeText, Integer, func, distinct, Numeric
 
 from tg_bot.modules.helper_funcs.msg_types import Types
 from tg_bot.modules.sql import SESSION, BASE
@@ -15,7 +15,7 @@ class Notes(BASE):
     file = Column(UnicodeText)
     is_reply = Column(Boolean, default=False)
     has_buttons = Column(Boolean, default=False)
-    msgtype = Column(Integer, default=Types.BUTTON_TEXT.value)
+    msgtype = Column(Numeric, default=Types.BUTTON_TEXT.value)
 
     def __init__(self, chat_id, name, value, msgtype, file=None):
         self.chat_id = str(chat_id)  # ensure string
