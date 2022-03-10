@@ -130,33 +130,8 @@ def new_member(bot: Bot, update: Update):
 
     sent = None
     new_members = update.effective_message.new_chat_members
-    
-    for new_mem in new_members:
-        first_name = new_mem.first_name or "PersonWithNoName"  # edge case of empty name - occurs for some bugs.
 
-        if new_mem.last_name:
-            fullname = "{} {}".format(first_name, new_mem.last_name)
-        else:
-            fullname = first_name
-        count = chat.get_members_count()
-        mention = mention_markdown(new_mem.id, escape_markdown(first_name))
-        if new_mem.username:
-            username = "@" + escape_markdown(new_mem.username)
-        else:
-            username = mention
-
-        valid_format = escape_invalid_curly_brackets(cust_welcome, VALID_WELCOME_FORMATTERS)
-        res = valid_format.format(first=escape_markdown(first_name),
-                                    last=escape_markdown(new_mem.last_name or first_name),
-                                    fullname=escape_markdown(fullname), username=username, mention=mention,
-                                    count=count, chatname=escape_markdown(chat.title), id=new_mem.id)
-        buttons = sql.get_welc_buttons(chat.id)
-        keyb = build_keyboard(buttons)
-
-        keyboard = InlineKeyboardMarkup(keyb)
-
-        sent = send(update, res, keyboard,
-                    sql.DEFAULT_WELCOME.format(first=first_name))  # type: Optional[Message]
+    print("test")
 
 @run_async
 def left_member(bot: Bot, update: Update):
